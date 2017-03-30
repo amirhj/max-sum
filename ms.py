@@ -6,17 +6,9 @@ from variableagent import VariableAgent
 from functionagent import FunctionAgent
 from messageserver import MessageServer
 
-opt_pattern = { '--temperature': {'name': 'temperature', 'type': 'float', 'default': 1.0},
-				'--test-temperature': {'name': 'test-temperature', 'type': 'float', 'default': 3.0},
-				'--decay': {'name': 'decay', 'type': 'float', 'default': 1.0009},
-				'--alpha': {'name': 'alpha', 'type': 'float', 'default': 0.9},
-				'--gamma': {'name': 'gamma', 'type': 'float', 'default': 0.8},
-				'-t': {'name': 'tests', 'type': 'int', 'default': 20},
-				'-c': {'name': 'convergence_size', 'type': 'int', 'default': 30},
-				'-s': {'name': 'standard_deviation', 'type': 'float', 'default': 1.0},
-				'--beta': {'name': 'beta', 'type': 'float', 'default': 0.8},
-				'-l': {'name': 'lambda', 'type': 'int', 'default': 10}
-				}
+opt_pattern = {
+		'-l': {'name': 'lambda', 'type': 'int', 'default': 10}
+		}
 
 arg = ArgParser(sys.argv[2:], opt_pattern)
 opt = arg.read()
