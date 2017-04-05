@@ -35,29 +35,30 @@ class FunctionAgent(Agent):
 				if vv != v:
 					other_vars.append(vv)
 
-			for value in self.domains[v]:
-				indecies = {vv:0 for vv in other_vars}
-				max_r = None
+			if len(other_vars) > 0:
+				for value in self.domains[v]:
+					indecies = {vv:0 for vv in other_vars}
+					max_r = None
 
-				while indecies[other_vars[0]] < len(self.domains[other_vars[0]]):
-					values_vector = {vv:self.domains[vv][indecies[vv]] for vv in other_vars}
-					values_vector[v] = value
+					while indecies[other_vars[0]] < len(self.domains[other_vars[0]]):
+						values_vector = {vv:self.domains[vv][indecies[vv]] for vv in other_vars}
+						values_vector[v] = value
 
-					rr = self.f.get_value(values_vector) + sum(self.q[vv][self.domains[vv][indecies[vv]]] for vv in other_vars)
-					if max_r is None or rr > max_r:
-						max_r = rr 
+						rr = self.f.get_value(values_vector) + sum(self.q[vv][self.domains[vv][indecies[vv]]] for vv in other_vars)
+						if max_r is None or rr > max_r:
+							max_r = rr 
 
-					for i in reversed(other_vars):
-						if indecies[i] < len(self.domains[i]):
-							indecies[i] += 1
-							if indecies[i] == len(self.domains[i]):
-								if i != other_vars[0]:
-									indecies[i] = 0
-							else:
-								break
-				r[value] = max_r
+						for i in reversed(other_vars):
+							if indecies[i] < len(self.domains[i]):
+								indecies[i] += 1
+								if indecies[i] == len(self.domains[i]):
+									if i != other_vars[0]:
+										indecies[i] = 0
+								else:
+									break
+					r[value] = max_r
 
-			self.send_message(v, {'header':'r', 'content':r})
+				self.send_message(v, {'header':'r', 'content':r})
 
 	def check_termination(self):
 		is_terminated = True
