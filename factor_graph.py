@@ -30,10 +30,10 @@ class FactorGraph:
 			neighbours = list(neighbours)
 
 			value = v['domain']['min']
-			domain = [value]
-			while value < v['domain']['max']:
-				value += v['domain']['step']
+			domain = []
+			while value <= v['domain']['max']:
 				domain.append(value)
+				value += v['domain']['step']
 
 			self.variables[v['name']] = Variable(v['name'], domain, functions, neighbours)
 
